@@ -82,15 +82,16 @@ const deleteUser = (req, res) => {
             if (result) {
                 return result.destroy()
                     .then((result) => {
-                        res.json({ mesage: `L'utilisateur a bien été supprimé.`, data: result })
+                        res.json({ message: `L'utilisateur a bien été supprimé.`, data: result })
                     })
             } else {
-                res.status(404).json({ mesage: `Aucun utilisateur trouvé.` })
+                res.status(404).json({ message: `Aucun utilisateur trouvé.` })
             }
         })
         .catch((error) => {
-            res.status(500).json({ mesage: `La requête n'a pas aboutie.`, data: error.message })
+            res.status(500).json({ message: `La requête n'a pas aboutie.`, data: error.message })
         })
 }
+
 
 module.exports = { findAllUsers, findUserByPk, createUser, updateUser, deleteUser }

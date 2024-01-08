@@ -23,6 +23,14 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {
         onDelete: 'CASCADE',
+        defaultScope: {
+            attributes: { exclude: ['password'] }
+        },
+        scopes: {
+            withPassword: {
+                attributes: {}
+            }
+        }
     }
     );
 }

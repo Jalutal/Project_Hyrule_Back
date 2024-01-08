@@ -9,27 +9,28 @@ const rolesHierarchy = {
     superadmin: ["superadmin", "admin", "edit"],
 }
 
-const login = (req, res) => {    
-    User.findOne({ where: { username: req.body.username } })
+const login = (req, res) => {
+    // A. On vérifie que l'utilisateur qui tente de se connecter existe bel et bien dans notre BDD
+    User.scope('withPassword').findOne({ where: { username: req.body.username } })
         .then((result) => {
-            
+            // B. Si l'utilisateur n'existe pas, on renvoie une réponse erreur Client
             if (!result) {
                 return res.status(404).json({ message: `Le nom d'utilisateur n'existe pas.` })
             }
 
-            bcrypt.compare(req.body.password, result.password)
+            return bcrypt.compare(req.body.password, result.password)
                 .then((isValid) => {
                     if (!isValid) {
                         return res.status(401).json({ message: `Le mot de passe n'est pas valide.` })
                     }
-                    const token = jwt.sign( {data : {username : result.username, userId : result, role : result.roleId}}, SECRET_KEY, {expiresIn : '10h'} )
+                    const token = jwt.sign({
+                        data: result.username,
+                        dataId: result.id
+                    }, SECRET_KEY, { expiresIn: '10h' });
 
                     // Possibilité de stocker le jwt dans un cookie côté client
                     // res.cookie('coworkingapi_jwt', token)
                     res.json({ message: `Login réussi`, data: token })
-                })
-                .catch(error => { 
-                    console.log(error.message)
                 })
         })
         .catch((error) => {
