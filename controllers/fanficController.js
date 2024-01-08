@@ -28,6 +28,8 @@ const findFictionByPk = (req, res) => {
 }
 
 const createFiction = (req, res) => {
+    
+    console.log(req.body);
         // Possible car le protect a été fait
     User.findOne({ where: { username: req.username } })
     .then(user => {
