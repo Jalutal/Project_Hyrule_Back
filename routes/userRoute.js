@@ -20,7 +20,7 @@ router
     .post(login)
 
 router
-.route('/users/info')
-.get(protect, getUserInfo);
+    .route('/users/info')
+    .get(protect, getUserInfo);
 
     module.exports = router;

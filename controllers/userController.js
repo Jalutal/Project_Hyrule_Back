@@ -49,31 +49,21 @@ const createUser = (req, res) => {
 const updateUser = (req, res) => {
     User.findByPk(req.params.id)
         .then((result) => {
-            console.log(result)
             if (result) {
-                if (req.body.password) {
-                    return bcrypt.hash(req.body.password, 10)
-                        .then((hash) => {
-                            req.body.password = hash                            
-                            req.body.username = result.username
-                            return result.update(req.body)
-                                .then(() => {
-                                    res.status(201).json({ message: `L'utilisateur a bien été mis à jour.`, data: result })
-                                })
-                        })
-                } else {
-                    res.status(404).json({ message: `Aucun mot de passe n'a été trouvé.` })
-                }
-            } else {
-                res.status(404).json({ message: `Aucun utilisateur à mettre à jour n'a été trouvé.` })
-            }
-        })
-        .catch(error => {
-            if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
-                return res.status(400).json({ message: error.message })
-            }
-            res.status(500).json({ message: 'Une erreur est survenue.', data: error.message })
-        })
+                return result.update(req.body)
+                .then(() => {
+                    res.status(201).json({ message: `L'utilisateur a bien été mis à jour.`, data: result })
+                })
+        } else {
+            res.status(404).json({ message: `Aucun utilisateur à mettre à jour n'a été trouvé.` })
+        }
+    })
+    .catch(error => {
+        if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
+            return res.status(400).json({ message: error.message })
+        }
+        res.status(500).json({ message: 'Une erreur est survenue.', data: error.message })
+    })
 }
 
 const deleteUser = (req, res) => {
