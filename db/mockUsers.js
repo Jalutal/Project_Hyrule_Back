@@ -15,7 +15,7 @@ const users = [
         username: "Midonia",
         password: "mdp",
         email: "unknown@fanfic.fr",
-        RoleId: 3
+        RoleId: 2
     }
 ];
 

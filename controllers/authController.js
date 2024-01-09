@@ -6,7 +6,6 @@ const SECRET_KEY = require('../configs/tokenData')
 const rolesHierarchy = {
     edit: ["edit"],
     admin: ["admin", "edit"],
-    superadmin: ["superadmin", "admin", "edit"],
 }
 
 const login = (req, res) => {
@@ -55,7 +54,7 @@ const protect = (req, res, next) => {
     if (token) {
         try {
             const decoded = jwt.verify(token, SECRET_KEY);
-            req.username = decoded.data.username
+            req.username = decoded.data
             next()
         } catch (error) {
             return res.status(403).json({ message: `Le token n'est pas valide.` })

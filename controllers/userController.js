@@ -91,7 +91,7 @@ const deleteUser = (req, res) => {
         .catch((error) => {
             res.status(500).json({ message: `La requête n'a pas aboutie.`, data: error.message })
         })
-}
+} 
 
 
 module.exports = { findAllUsers, findUserByPk, createUser, updateUser, deleteUser }

@@ -14,7 +14,7 @@ router
     .get(findUserByPk)
     .put(protect, updateUser)
     .delete(protect, correctUser, deleteUser)
-    .delete(protect, restrict("superadmin"), deleteUser)
+    .delete(protect, restrict("admin"), deleteUser)
 
 router
     .route('/login')
