@@ -19,28 +19,18 @@ const setUsers = (User) => {
 const setFanfics = (Fanfic) => {
     return Promise.all([mockFanfic.map(fanfic => {
                 return Fanfic.create(fanfic)
-                    .then(() => { console.log('reussi'); })
-                    .catch((error) => {
-                        console.log(error.message)
-                    })
-            
     })])
 }
 
 const setComments = (Comments) => {
     return Promise.all([mockComments.map(comments => {
-                return Comments.create(comments)
-                    .then(() => { console.log('reussi'); })
-                    .catch((error) => {
-                        console.log(error.message)
-                    })
-            
+                return Comments.create(comments)       
     })])
 }
 
 
 const setRoles = (Role) => {
-    return Promise.all([Role.create({ label: "superadmin" }), Role.create({ label: "admin" }), Role.create({ label: "edit" })])
+    return Promise.all([Role.create({ label: "admin" }), Role.create({ label: "edit" })])
 }
 
 

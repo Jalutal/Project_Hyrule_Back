@@ -94,4 +94,23 @@ const deleteUser = (req, res) => {
 } 
 
 
-module.exports = { findAllUsers, findUserByPk, createUser, updateUser, deleteUser }
+const getUserInfo = (req, res) => {
+    User.findOne({
+        where: {
+            username: req.username
+        }
+    })
+    .then(user => {
+        if (user) {
+            res.json({ message: 'Informations de l\'utilisateur récupérées avec succès', data: { userId: user.id } });
+        } else {
+            res.status(404).json({ message: `L'utilisateur n'a pas été trouvé.` });
+        }
+    })
+    .catch(error => {
+        res.status(500).json({ message: `Une erreur est survenue.`, data: error.message });
+    });
+};
+
+
+module.exports = { findAllUsers, findUserByPk, createUser, updateUser, deleteUser, getUserInfo }

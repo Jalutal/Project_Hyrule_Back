@@ -19,15 +19,11 @@ app.get('/', (req, res) => {
 // Définir la route pour récupérer les fictions d'un utilisateur
 app.get('/user/:id/checkfictions', async (req, res) => {
   const idUtilisateur = req.params.idUtilisateur;
-
   try {
-    // Récupérer les fictions associées à un utilisateur avec Sequelize
     const fictions = await User.findAll({
       where: { id: idUtilisateur },
       include: [{ model: Fiction }],
     });
-
-    // Envoyer les résultats en tant que réponse JSON
     res.json(fictions);
   } catch (error) {
     console.error(error);

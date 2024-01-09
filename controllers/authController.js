@@ -71,9 +71,13 @@ const restrict = (labelRole) => {
             }
         })
             .then(user => {
+                console.log("roleId", user.RoleId)
                 Role.findByPk(user.RoleId)
                     .then(role => {
+                        console.log("label", role.label)
                         if (rolesHierarchy[role.label].includes(labelRole)) {
+                            console.log(role)
+                            console.log("role",role.label)
                             next();
                         } else {
                             res.status(403).json({ message: `Droits insuffisants` });
@@ -129,7 +133,8 @@ const restrictToOwnUser = (model) => {
 const correctUser = (req, res, next) => {
     User.findOne({ where: { username: req.username } })
         .then(authUser => {
-            console.log(authUser.id, parseInt(req.params.id))
+            console.log("authId",authUser.id)
+            console.log('param id', req.params.id)
             if (authUser.id === parseInt(req.params.id)) {
                 next()
             } else {

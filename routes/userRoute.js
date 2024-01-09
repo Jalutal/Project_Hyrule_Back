@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const { findAllUsers, findUserByPk, createUser, updateUser,  deleteUser } = require('../controllers/userController')
-const { login, protect, restrict, correctUser } = require('../controllers/authController')
-
+const { login, protect, restrict } = require('../controllers/authController')
+const { getUserInfo } = require('../controllers/userController');
 
 router
     .route('/')
@@ -13,11 +13,14 @@ router
     .route('/:id')
     .get(findUserByPk)
     .put(protect, updateUser)
-    .delete(protect, correctUser, deleteUser)
     .delete(protect, restrict("admin"), deleteUser)
 
 router
     .route('/login')
     .post(login)
 
-    module.exports = router
+router
+.route('/users/info')
+.get(protect, getUserInfo);
+
+    module.exports = router;

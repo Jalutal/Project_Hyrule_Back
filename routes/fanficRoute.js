@@ -13,7 +13,7 @@ router
     .route('/:id')
     .get(findFictionByPk)
     .put(protect, updateFiction)
-    .delete(protect, restrict("superadmin"), deleteFiction)
+    .delete(protect, restrict("admin"), deleteFiction)
 
 router
     .route('/login')
