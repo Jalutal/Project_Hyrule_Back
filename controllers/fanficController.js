@@ -1,4 +1,4 @@
-const { Fanfic, User } = require('../db/sequelizeSetup')
+const { Fanfic, User, Comments } = require('../db/sequelizeSetup')
 const { UniqueConstraintError, ValidationError } = require('sequelize')
 
 
@@ -14,7 +14,7 @@ const findAllFictions = (req, res) => {
 }
 
 const findFictionByPk = (req, res) => {
-    Fanfic.findByPk((parseInt(req.params.id)))
+    Fanfic.findByPk(parseInt(req.params.id), { include: [{model: Comments, include: User}] })
         .then((result) => {
             if (result) {
                 res.json({ message: 'Un utilisateur a été trouvé.', data: result })

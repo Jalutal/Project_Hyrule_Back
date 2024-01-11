@@ -29,6 +29,9 @@ Fanfic.belongsTo(User)
 User.hasMany(Comments)
 Comments.belongsTo(User)
 
+Fanfic.hasMany(Comments)
+Comments.belongsTo(Fanfic)
+
 
 sequelize.sync({ force: true })
     .then(async() => {

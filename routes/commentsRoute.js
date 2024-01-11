@@ -1,19 +1,19 @@
 const express = require('express')
 const router = express.Router()
 const { findAllComments, findCommentByPk, createComment, updateComment, deleteComment } = require('../controllers/commentsController')
-const { login, protect } = require('../controllers/authController')
+const { login, protect, restrict } = require('../controllers/authController')
 
 
 router
     .route('/')
     .get(findAllComments)
-    .post(createComment)
+    .post(protect, createComment)
 
 router
     .route('/:id')
     .get(findCommentByPk)
     .put(protect, updateComment)
-    .delete(protect, deleteComment)
+    .delete(protect, restrict("admin"), deleteComment)
 
 router
     .route('/login')
