@@ -14,7 +14,7 @@ const findAllFictions = (req, res) => {
 }
 
 const findFictionByPk = (req, res) => {
-    Fanfic.findByPk(parseInt(req.params.id), { include: [{model: Comments, include: User}] })
+    Fanfic.findByPk(parseInt(req.params.id), { include: [{model: Comments, include: User}, User] })
         .then((result) => {
             if (result) {
                 res.json({ message: 'Un utilisateur a été trouvé.', data: result })
@@ -27,18 +27,14 @@ const findFictionByPk = (req, res) => {
         })
 }
 
-const createFiction = (req, res) => {
-    
+const createFiction = (req, res) => {    
     console.log(req.body);
-        // Possible car le protect a été fait
     User.findOne({ where: { username: req.username } })
     .then(user => {
         if (!user) {
             return res.status(404).json({ message: `L'utilisateur n'a pas été trouvé.` })
         }
         const newFiction = { ...req.body, UserId: user.id }
-
-        // Possible car le protect a été fait
         Fanfic.create(newFiction)
             .then((fiction) => {
                 res.status(201).json({ message: 'La fiction a bien été créé', data: fiction })
