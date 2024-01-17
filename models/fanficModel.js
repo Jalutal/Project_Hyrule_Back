@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: {
                 len: {
-                    msg: "Le résumé de la fiction doit avoir un nombre de caractères compris entre 150 et 3000.",
-                    args: [150, 3000]
+                    msg: "Le résumé de la fiction doit avoir un nombre de caractères compris entre 50 et 3000.",
+                    args: [50, 3000]
                 }
             },
         },
