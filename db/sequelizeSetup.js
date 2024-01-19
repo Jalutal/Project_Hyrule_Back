@@ -5,7 +5,6 @@ const CommentModel = require('../models/commentModel')
 const { setUsers, setRoles, setFanfics, setComments } = require('./setDataSample');
 const { Sequelize, DataTypes } = require('sequelize');
 
-
 const sequelize = new Sequelize('zelda_fanfic', 'root', '', {
     host: 'localhost',
     dialect: 'mariadb',
@@ -16,9 +15,6 @@ const User = UserModel(sequelize, DataTypes)
 const Role = RoleModel(sequelize, DataTypes)
 const Fanfic = FanficModel(sequelize, DataTypes)
 const Comments = CommentModel(sequelize, DataTypes)
-
-
-
 
 Role.hasMany(User)
 User.belongsTo(Role)
@@ -32,24 +28,18 @@ Comments.belongsTo(User)
 Fanfic.hasMany(Comments)
 Comments.belongsTo(Fanfic)
 
-
 sequelize.sync({ force: true })
     .then(async() => {
         await setRoles(Role)
         await setUsers(User)
         await setFanfics(Fanfic)
         await setComments(Comments)
-
-        
-
     })
     .catch(error => {
         console.log('this is error',error.message)
     })
-
     sequelize.authenticate()
     .then(() => console.log('La connexion à la base de données a bien été établie.'))
     .catch(error => console.error(`Impossible de se connecter à la base de données ${error}`))
-
 
 module.exports = { User, Role, Fanfic, Comments, sequelize }

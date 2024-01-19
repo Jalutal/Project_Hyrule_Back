@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: {
                 len: {
-                    msg: "Le commentaire doit avoir un nombre de caractères compris entre 20 et 250.",
-                    args: [4, 50]
+                    msg: "Le commentaire doit avoir un nombre de caractères compris entre 2 et 250.",
+                    args: [2, 250]
                 }
             },
         }       
